@@ -1,0 +1,10 @@
+Sun, 18 Jan 2015 23:42:12 +0200
+README.rdoc	Mon, 12 Jan 2015 16:48:37 +0200
+app/controllers/application_controller.rb	Mon, 12 Jan 2015 16:48:37 +0200
+app/controllers/beers_controller.rb	Mon, 12 Jan 2015 19:50:27 +0200
+app/controllers/breweries_controller.rb	Sun, 18 Jan 2015 22:13:29 +0200
+app/helpers/application_helper.rb	Mon, 12 Jan 2015 16:48:37 +0200
+app/helpers/beers_helper.rb	Mon, 12 Jan 2015 19:50:27 +0200
+app/helpers/breweries_helper.rb	Mon, 12 Jan 2015 19:11:08 +0200
+app/models/beer.rb	Mon, 12 Jan 2015 19:55:57 +0200
+app/models/brewery.rb	Mon, 12 Jan 2015 19:56:20 +0200
