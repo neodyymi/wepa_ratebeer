@@ -1,0 +1,93 @@
+irb(main):008:0> b = Brewery.new name:"BrewDog", year:2007
+=> #<Brewery id: nil, name: "BrewDog", year: 2007, created_at: nil, updated_at: nil>
+irb(main):009:0> b.save
+   (0.2ms)  begin transaction
+  SQL (0.6ms)  INSERT INTO "breweries" ("name", "year", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["name", "BrewDog"], ["year", 2007], ["created_at", "2015-01-24 12:24:45.617515"], ["updated_at", "2015-01-24 12:24:45.617515"]]
+   (17.3ms)  commit transaction
+=> true
+irb(main):010:0> p = Beer.new name:"Punk Ipa", style:"IPA"
+=> #<Beer id: nil, name: "Punk Ipa", style: "IPA", brewery_id: nil, created_at: nil, updated_at: nil>
+irb(main):011:0> p.brewery = b
+=> #<Brewery id: 9, name: "BrewDog", year: 2007, created_at: "2015-01-24 12:24:45", updated_at: "2015-01-24 12:24:45">
+irb(main):012:0> p.save
+   (0.1ms)  begin transaction
+  SQL (0.3ms)  INSERT INTO "beers" ("name", "style", "brewery_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["name", "Punk Ipa"], ["style", "IPA"], ["brewery_id", 9], ["created_at", "2015-01-24 12:25:27.888153"], ["updated_at", "2015-01-24 12:25:27.888153"]]
+   (17.7ms)  commit transaction
+=> true
+irb(main):013:0> n = Beer.new name:"Nanny State", style:"lowalcohol"
+=> #<Beer id: nil, name: "Nanny State", style: "lowalcohol", brewery_id: nil, created_at: nil, updated_at: nil>
+irb(main):014:0> n.brewery = b
+=> #<Brewery id: 9, name: "BrewDog", year: 2007, created_at: "2015-01-24 12:24:45", updated_at: "2015-01-24 12:24:45">
+irb(main):015:0> n.save
+   (0.2ms)  begin transaction
+  SQL (0.4ms)  INSERT INTO "beers" ("name", "style", "brewery_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["name", "Nanny State"], ["style", "lowalcohol"], ["brewery_id", 9], ["created_at", "2015-01-24 12:26:44.657262"], ["updated_at", "2015-01-24 12:26:44.657262"]]
+   (7.5ms)  commit transaction
+=> true
+irb(main):016:0> p.ratings << Rating.create score:10
+SyntaxError: (irb):16: syntax error, unexpected tLABEL, expecting end-of-input
+p.ratings << Rating.create score:10
+                                 ^
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/railties-4.2.0/lib/rails/commands/console.rb:110:in `start'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/railties-4.2.0/lib/rails/commands/console.rb:9:in `start'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/railties-4.2.0/lib/rails/commands/commands_tasks.rb:68:in `console'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/railties-4.2.0/lib/rails/commands/commands_tasks.rb:39:in `run_command!'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/railties-4.2.0/lib/rails/commands.rb:17:in `<top (required)>'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/activesupport-4.2.0/lib/active_support/dependencies.rb:274:in `require'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/activesupport-4.2.0/lib/active_support/dependencies.rb:274:in `block in require'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/activesupport-4.2.0/lib/active_support/dependencies.rb:240:in `load_dependency'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/activesupport-4.2.0/lib/active_support/dependencies.rb:274:in `require'
+	from /home/vrsaari/github/ratebeer/bin/rails:8:in `<top (required)>'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/activesupport-4.2.0/lib/active_support/dependencies.rb:268:in `load'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/activesupport-4.2.0/lib/active_support/dependencies.rb:268:in `block in load'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/activesupport-4.2.0/lib/active_support/dependencies.rb:240:in `load_dependency'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/activesupport-4.2.0/lib/active_support/dependencies.rb:268:in `load'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/spring-1.2.0/lib/spring/commands/rails.rb:6:in `call'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/spring-1.2.0/lib/spring/command_wrapper.rb:38:in `call'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/spring-1.2.0/lib/spring/application.rb:183:in `block in serve'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/spring-1.2.0/lib/spring/application.rb:156:in `fork'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/spring-1.2.0/lib/spring/application.rb:156:in `serve'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/spring-1.2.0/lib/spring/application.rb:131:in `block in run'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/spring-1.2.0/lib/spring/application.rb:125:in `loop'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/spring-1.2.0/lib/spring/application.rb:125:in `run'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/spring-1.2.0/lib/spring/application/boot.rb:18:in `<top (required)>'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+	from /home/vrsaari/.rbenv/versions/2.2.0/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+	from -e:1:in `<main>'irb(main):017:0> Rating
+=> Rating(id: integer, score: integer, beer_id: integer, created_at: datetime, updated_at: datetime)
+irb(main):018:0> p.ratings.create score:15
+   (0.1ms)  begin transaction
+  SQL (0.3ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["score", 15], ["beer_id", 21], ["created_at", "2015-01-24 12:28:07.749641"], ["updated_at", "2015-01-24 12:28:07.749641"]]
+   (15.5ms)  commit transaction
+=> #<Rating id: 1, score: 15, beer_id: 21, created_at: "2015-01-24 12:28:07", updated_at: "2015-01-24 12:28:07">
+irb(main):019:0> p.ratings.create score:10
+   (0.2ms)  begin transaction
+  SQL (0.4ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["score", 10], ["beer_id", 21], ["created_at", "2015-01-24 12:28:26.401477"], ["updated_at", "2015-01-24 12:28:26.401477"]]
+   (8.7ms)  commit transaction
+=> #<Rating id: 2, score: 10, beer_id: 21, created_at: "2015-01-24 12:28:26", updated_at: "2015-01-24 12:28:26">
+irb(main):020:0> p.ratings.create score:11
+   (0.1ms)  begin transaction
+  SQL (0.3ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["score", 11], ["beer_id", 21], ["created_at", "2015-01-24 12:28:27.913809"], ["updated_at", "2015-01-24 12:28:27.913809"]]
+   (15.7ms)  commit transaction
+=> #<Rating id: 3, score: 11, beer_id: 21, created_at: "2015-01-24 12:28:27", updated_at: "2015-01-24 12:28:27">
+irb(main):021:0> p.ratings.create score:12
+   (0.1ms)  begin transaction
+  SQL (0.2ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["score", 12], ["beer_id", 21], ["created_at", "2015-01-24 12:28:29.043397"], ["updated_at", "2015-01-24 12:28:29.043397"]]
+   (17.3ms)  commit transaction
+=> #<Rating id: 4, score: 12, beer_id: 21, created_at: "2015-01-24 12:28:29", updated_at: "2015-01-24 12:28:29">
+irb(main):022:0> n.ratings.create score:5
+   (0.2ms)  begin transaction
+  SQL (0.2ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["score", 5], ["beer_id", 22], ["created_at", "2015-01-24 12:28:48.372309"], ["updated_at", "2015-01-24 12:28:48.372309"]]
+   (6.3ms)  commit transaction
+=> #<Rating id: 5, score: 5, beer_id: 22, created_at: "2015-01-24 12:28:48", updated_at: "2015-01-24 12:28:48">
+irb(main):023:0> n.ratings.create score:4
+   (0.1ms)  begin transaction
+  SQL (0.2ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["score", 4], ["beer_id", 22], ["created_at", "2015-01-24 12:28:49.764025"], ["updated_at", "2015-01-24 12:28:49.764025"]]
+   (5.7ms)  commit transaction
+=> #<Rating id: 6, score: 4, beer_id: 22, created_at: "2015-01-24 12:28:49", updated_at: "2015-01-24 12:28:49">
+irb(main):024:0> n.ratings.create score:6
+   (0.2ms)  begin transaction
+  SQL (0.2ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["score", 6], ["beer_id", 22], ["created_at", "2015-01-24 12:28:50.858541"], ["updated_at", "2015-01-24 12:28:50.858541"]]
+   (10.0ms)  commit transaction
+=> #<Rating id: 7, score: 6, beer_id: 22, created_at: "2015-01-24 12:28:50", updated_at: "2015-01-24 12:28:50">
+irb(main):025:0> 
+
