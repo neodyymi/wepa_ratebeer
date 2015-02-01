@@ -3,7 +3,11 @@
 <p>Number of ratings: <%= @ratings.count %></p>
 <ul>
   <% @ratings.each do |rating| %>
-      <li> <%= rating %> <%= link_to 'delete', rating_path(rating.id), method: :delete, data: { confirm: 'Are you sure?' } %></li>
+      <% if not rating.user.nil? %>
+      <li> <%= rating %> <%= link_to rating.user.username, rating.user %></li>
+      <% else %>
+          <li> <%= rating %> ERROR: Ei useria kiinni tässä! </li>
+      <% end %>
   <% end %>
 </ul>
 <p>

@@ -1,6 +1,6 @@
 module RatingAverage
   def average_rating
-    sum = self.ratings.average(:score)
-    sum.to_f
+    return 0 if self.ratings.empty?
+    self.ratings.average(:score).to_f
   end
 end
