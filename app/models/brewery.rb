@@ -1,8 +1,7 @@
 class Brewery < ActiveRecord::Base
   include RatingAverage
 
-  validates :year, numericality: {greater_than_or_equal_to: 1042,
-                                  less_than_or_equal_to: 2015}
+  validates :year, numericality: {greater_than_or_equal_to: 1042, less_than_or_equal_to: Proc.new {Date.today.year}}
   validates :name, presence: true
 
   has_many :beers, dependent: :destroy
@@ -17,4 +16,7 @@ class Brewery < ActiveRecord::Base
     self.year = 2015
     puts "changed year to #{self.year}"
   end
+
+  private
+
 end
