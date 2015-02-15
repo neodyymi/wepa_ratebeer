@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   resources :beer_clubs
 
+  resources :styles
+
   root 'breweries#index'
 
   #get 'ratings', to: 'ratings#index'

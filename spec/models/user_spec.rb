@@ -86,7 +86,8 @@ describe User do
 
     it "is the one with highest rating average if several styles rated" do
       create_beers_with_ratings(10, 20, 15, user)
-      beer = FactoryGirl.create(:beer, style:"IPA")
+      st = Style.create style:'IPA'
+      beer = FactoryGirl.create(:beer, style:st)
       FactoryGirl.create(:rating, beer:beer, score:30, user:user)
       expect(user.favorite_style).to eq(beer.style)
     end

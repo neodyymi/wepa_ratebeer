@@ -6,6 +6,7 @@ describe "User" do
   before :each do
     FactoryGirl.create :user
     FactoryGirl.create :brewery
+    FactoryGirl.create :style
     sign_in(username:"Pekka", password:"Foobar1")
   end
 
@@ -14,7 +15,7 @@ describe "User" do
       visit new_beer_path
 
       fill_in('beer[name]', with:'Testiolut' )
-      select('Weizen', from:'beer[style]')
+      select('Lager', from:'beer[style_id]')
       select('anonymous', from:'beer[brewery_id]')
 
       expect{

@@ -4,7 +4,7 @@ class BeersController < ApplicationController
   before_action :ensure_that_signed_in, except: [:index, :show]
 
   def set_styles_and_breweries
-    @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+    @styles = Style.all
     @breweries = Brewery.all
   end
   # GET /beers
@@ -77,6 +77,6 @@ class BeersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def beer_params
-      params.require(:beer).permit(:name, :style, :brewery_id)
+      params.require(:beer).permit(:name, :style_id, :brewery_id)
     end
 end
