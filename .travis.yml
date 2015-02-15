@@ -12,3 +12,4 @@ deploy:
     secure: UrHTq6dPKw8psyDQ2JLY2ngTdQZ7InVx5yT4QuUOZMLInPgVhJW19DOxd5SId+bGETa6+MYHk+KusXfoQhB3t6wTAawMsDpBKSx1T+3ru9rX49FGc+3ochL5/4WAzTX+GbGzsvuhf7V1W7kd9k5hqWaKiKO0/6qoLZqbRaT963Q=
   app: wepa_ratebeer
   run: "rake db:migrate"
+env: APIKEY=e50748afdc9ef866bf1692255fb5ba92

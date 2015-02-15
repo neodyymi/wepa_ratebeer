@@ -8,6 +8,17 @@
 <p>
   Has made <%= @user.ratings.count %> ratings with an average of <%= @user.average_rating %>. </br>Favourite style is <%= @user.favorite_style %>.
 </p>
+
+  <% if @user.beer_clubs.any? %>
+    <p>
+      member of
+      <% @user.beer_clubs.each do |club| %>
+          <%= link_to club.name, club %>
+      <% end %>
+    </p>
+  <% end %>
+
+
 <ul>
   <% @user.ratings.each do |rating| %>
       <li>

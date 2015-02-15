@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h2>
+  <%= "#{@beer_club.name} #{@beer_club.city}"%>
+</h2>
+
+<p>
+  Founded in <%= @beer_club.founded %>
+</p>
+
+<ul>
+  <% @beer_club.members.each do |member| %>
+    <li>
+      <%= link_to member.username, member %>
+    </li>
+  <% end %>
+</ul>
+<% if not current_user.nil? %>
+    <%if not current_user.beer_clubs.include?(@beer_club) %>
+        <%= form_for(@membership) do |f| %>
+            <%= f.hidden_field :beer_club_id %>
+            <%= f.submit value:"join the club" %>
+        <% end %>
+    <% else %>
+        <%= form_for(@membership, method: "delete") do |f| %>
+            <%= f.hidden_field :beer_club_id %>
+            <%= f.submit value: "end the membership" %>
+        <% end %>
+    <% end %>
+<% end %>
+
+
+<%= link_to 'Edit', edit_beer_club_path(@beer_club) if current_user %>

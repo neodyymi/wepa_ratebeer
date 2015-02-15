@@ -13,6 +13,14 @@
 
 ActiveRecord::Schema.define(version: 20150201203634) do
 
+  create_table "beer_clubs", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "founded"
+    t.string   "city"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "beers", force: :cascade do |t|
     t.string   "name"
     t.string   "style"
@@ -26,6 +34,13 @@ ActiveRecord::Schema.define(version: 20150201203634) do
     t.integer  "year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "beer_club_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "ratings", force: :cascade do |t|
