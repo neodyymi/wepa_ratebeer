@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+gem 'bootstrap-sass'
 gem 'httparty'
 gem 'bcrypt', '~> 3.1.7'
 gem 'rb-readline'
@@ -63,5 +64,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'webmock'
 end
-
+group :development do
+  gem 'rails_layout'
+end
 ruby '2.2.0'
