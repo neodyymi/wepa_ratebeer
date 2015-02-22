@@ -32,4 +32,9 @@ class User < ActiveRecord::Base
     best
 
   end
+
+  def self.top(n)
+    users_sorted_by_most_ratings = User.all.sort_by { |u| -(u.ratings.count||0)}
+    users_sorted_by_most_ratings[0,n]
+  end
 end

@@ -1,10 +1,44 @@
 <h2>List of ratings</h2>
 
 <p>Number of ratings: <%= @ratings.count %></p>
+<p>
+<h4>Top rated beers</h4>
 <ul>
-  <% @ratings.each do |rating| %>
+  <% @top_beers.each do |beer| %>
+      <li><%= link_to beer.to_s + ": " + beer.average_rating.to_s, beer %> </li>
+  <% end %>
+</ul>
+</p>
+<p>
+<h4>Top rated breweries</h4>
+<ul>
+  <% @top_breweries.each do |b| %>
+      <li><%= link_to b.name + ": " + b.average_rating.to_s, b %> </li>
+  <% end %>
+</ul>
+</p>
+<p>
+<h4>Top styles</h4>
+<ul>
+  <% @top_styles.each do |s| %>
+      <li><%= link_to s.style + ": " + s.average_rating.to_s, s %> </li>
+  <% end %>
+</ul>
+</p>
+<p>
+<h4>Most active users</h4>
+<ul>
+  <% @top_users.each do |u| %>
+      <li><%= link_to u.username + ": " + u.ratings.count.to_s + " ratings", u %> </li>
+  <% end %>
+</ul>
+</p>
+
+<h4>Recent ratings</h4>
+<ul>
+  <% @recent.each do |rating| %>
       <% if not rating.user.nil? %>
-      <li> <%= rating %> <%= link_to rating.user.username, rating.user %></li>
+          <li> <%= rating %> <%= link_to rating.user.username, rating.user %></li>
       <% else %>
           <li> <%= rating %> ERROR: Ei useria kiinni tässä! </li>
       <% end %>

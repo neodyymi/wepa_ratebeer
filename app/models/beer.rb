@@ -9,9 +9,12 @@ class Beer < ActiveRecord::Base
   has_many :raters, through: :ratings, source: :user
   belongs_to :style
 
-
+  def self.top(n)
+    sorted_by_rating_in_desc_order = Beer.all.sort_by { |b| -(b.average_rating||0)}
+    sorted_by_rating_in_desc_order[0,n]
+  end
 
   def to_s
-    self.name + " (" + self.brewery.name + ")"
+    self.name + " (" + self.brewery.name + ") "
   end
 end
