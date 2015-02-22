@@ -1,12 +1,11 @@
-<p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Username:</strong>
-  <%= @user.username %>
-</p>
+
+  <h2><%= @user.username %> <% if @user.banned %><span class="label label-info text-uppercase">Account frozen</span><% end %>
+  </h2></p>
 
 <p>
-  Has made <%= @user.ratings.count %> ratings with an average of <%= @user.average_rating %>. </br>Favourite style is <%= @user.favorite_style %>.
+  Has made <%= @user.ratings.count %> ratings with an average of <%= round(@user.average_rating) %>. </br>Favourite style is <%= @user.favorite_style %>.
 </p>
 
   <% if @user.beer_clubs.any? %>
@@ -30,9 +29,15 @@
       </li>
   <% end %>
 </ul>
-
-<% if @user == current_user %>
-    <%= link_to 'Edit', edit_user_path(@user) %> |
-    <%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' } %> |
-<%end%>
-<%= link_to 'Back', users_path %>
+<p>
+  <% status='Reactivate'
+     status='Freeze' unless @user.banned
+     %>
+  <%= link_to "#{status} account", toggle_frozen_user_path(@user.id), method: :post, class: "btn btn-warning" if current_user.admin and current_user.id != @user.id%>
+</p>
+<p>
+  <%= edit_and_destroy_buttons(@user) %>
+  </p>
+<p>
+<%= link_to 'Back', users_path, class:'btn btn-default'%>
+</p>

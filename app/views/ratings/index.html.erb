@@ -12,7 +12,7 @@
         <h4>Top rated beers</h4>
         <ul>
           <% @top_beers.each do |beer| %>
-              <li><%= link_to beer.to_s + ": " + beer.average_rating.to_s, beer %> </li>
+              <li><%= link_to beer.to_s + ": " + round(beer.average_rating).to_s, beer %> </li>
           <% end %>
         </ul>
       </div>
@@ -20,7 +20,7 @@
         <h4>Top rated breweries</h4>
         <ul>
           <% @top_breweries.each do |b| %>
-              <li><%= link_to b.name + ": " + b.average_rating.to_s, b %> </li>
+              <li><%= link_to b.name + ": " + round(b.average_rating.to_s), b %> </li>
           <% end %>
         </ul>
       </div>
@@ -28,7 +28,7 @@
         <h4>Top styles</h4>
         <ul>
           <% @top_styles.each do |s| %>
-              <li><%= link_to s.style + ": " + s.average_rating.to_s, s %> </li>
+              <li><%= link_to s.style + ": " + round(s.average_rating.to_s), s %> </li>
           <% end %>
         </ul>
       </div>

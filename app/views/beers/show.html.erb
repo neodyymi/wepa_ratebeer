@@ -33,10 +33,9 @@
         <%= f.submit class:"btn btn-primary" %>
     <% end %>
     <p>
-      <%= link_to 'Edit', edit_beer_path(@beer), class:'btn btn-default' %>
       <%= link_to 'Back', beers_path, class:'btn btn-default' %>
     </p>
     <p>
-      <%= link_to 'Destroy', @beer, class:'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } if current_user %>
+      <%= edit_and_destroy_buttons(@beer) %>
     </p>
 <% end %>

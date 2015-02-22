@@ -5,14 +5,14 @@
   <%= @style.description %>
 </p>
 <p>
-  <ul>
+<ul>
   <% @style.beers.all.each do |b| %>
-  <li><%= link_to b%></li>
+      <li><%= link_to b%></li>
   <% end %>
-  </ul>
+</ul>
 </p>
+
+<p><%= link_to 'Back', styles_path, class:'btn btn-default' %></p>
 <p>
-  <% if current_user %>
-  <%= link_to 'Destroy', @style, method: :delete, data: { confirm: 'Are you sure?' } %>
-  <%end%>
+  <%= edit_and_destroy_buttons(@style) %>
 </p>

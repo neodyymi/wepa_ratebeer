@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :is_admin, only: [:toggle_frozen]
 
   # GET /users
   # GET /users.json
@@ -63,6 +64,16 @@ class UsersController < ApplicationController
       end
     end
   end
+
+  def toggle_frozen
+    user = User.find(params[:id])
+    user.update_attribute :banned, (not user.banned)
+
+    new_status = user.banned? ? "frozen" : "active"
+
+    redirect_to :back, notice:"user account status changed to #{new_status}"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
