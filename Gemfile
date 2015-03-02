@@ -1,9 +1,12 @@
 
 source 'https://rubygems.org'
+
+gem 'jquery-turbolinks'
 gem 'bootstrap-sass'
 gem 'httparty'
 gem 'bcrypt', '~> 3.1.7'
 gem 'rb-readline'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
 # Use sqlite3 as the database for Active Record
@@ -64,6 +67,8 @@ group :test do
   gem 'rspec-its'
   gem 'simplecov', require: false
   gem 'webmock'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 group :development do
   gem 'rails_layout'

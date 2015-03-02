@@ -1,13 +1,44 @@
 class BreweriesController < ApplicationController
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
-  before_action :ensure_that_signed_in, except: [:index, :show]
+  before_action :ensure_that_signed_in, except: [:index, :show, :list]
   before_action :is_admin, only: [:destroy]
 
   # GET /breweries
   # GET /breweries.json
+
+  def list
+
+  end
+
   def index
     @active_breweries = Brewery.active
     @retired_breweries = Brewery.retired
+    @breweries = Brewery.all
+
+    sort = params[:sort] || 'asc'
+    order = params[:order] || 'name'
+
+    if sort == 'asc'
+      @direction = 'desc'
+      @active_breweries = case order
+                            when 'name' then @active_breweries.sort_by { |b| b.name }
+                            when 'year' then @active_breweries.sort_by { |b| b.year }
+                          end
+      @retired_breweries = case order
+                            when 'name' then @retired_breweries.sort_by { |b| b.name }
+                            when 'year' then @retired_breweries.sort_by { |b| b.year }
+                          end
+    else
+      @direction = 'asc'
+      @active_breweries = case order
+                            when 'name' then @active_breweries.sort_by { |b| b.name }.reverse
+                            when 'year' then @active_breweries.sort_by { |b| b.year }.reverse
+                          end
+      @retired_breweries = case order
+                             when 'name' then @retired_breweries.sort_by { |b| b.name }.reverse
+                             when 'year' then @retired_breweries.sort_by { |b| b.year }.reverse
+                           end
+    end
   end
 
   # GET /breweries/1
@@ -74,15 +105,15 @@ class BreweriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_brewery
-      @brewery = Brewery.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_brewery
+    @brewery = Brewery.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def brewery_params
-      params.require(:brewery).permit(:name, :year, :active)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def brewery_params
+    params.require(:brewery).permit(:name, :year, :active)
+  end
 
 
 

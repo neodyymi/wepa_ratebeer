@@ -1,4 +1,5 @@
 require 'simplecov'
+
 SimpleCov.start('rails')
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
@@ -62,4 +63,6 @@ module OwnTestHelper
     fill_in('password', with:credentials[:password])
     click_button('Log in')
   end
+
+
 end
