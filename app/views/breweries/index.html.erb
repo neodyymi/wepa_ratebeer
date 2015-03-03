@@ -1,21 +1,34 @@
 
 
 <h1>Listing breweries</h1>
-<p> Number of breweries: <%= @active_breweries.count + @retired_breweries.count %> </p>
-<h2>Active</h2>
 
-<p> Number of active breweries: <%= @active_breweries.count %> </p>
+<div style="border-style: solid;">
+  brewerylist-name-asc: <%= ActionController::Base.new.fragment_exist?( 'brewerylist-name-asc' ) %>
+  <br>
+  brewerylist-name-desc: <%= ActionController::Base.new.fragment_exist?( 'brewerylist-name-desc' ) %>
+  <br>
+  brewerylist-year-asc: <%= ActionController::Base.new.fragment_exist?( 'brewerylist-year-asc' ) %>
+  <br>
+  current: <%= "brewerylist-#{@order}-#{@direction}" %>
+</div>
 
-<%= render 'list', breweries: @active_breweries %>
+<% cache "brewerylist-#{@order}-#{@direction}", skip_digest: true do %>
 
-<h2>Retired</h2>
+    <p> Number of breweries: <%= @active_breweries.count + @retired_breweries.count %> </p>
+    <h2>Active</h2>
 
-<p> Number of retired breweries: <%= @retired_breweries.count %> </p>
+    <p> Number of active breweries: <%= @active_breweries.count %> </p>
 
-<%= render 'list', breweries: @retired_breweries %>
+    <%= render 'list', breweries: @active_breweries %>
 
-<br>
+    <h2>Retired</h2>
 
+    <p> Number of retired breweries: <%= @retired_breweries.count %> </p>
+
+    <%= render 'list', breweries: @retired_breweries %>
+
+    <br>
+<% end %>
 
 <%= link_to 'List of beers', beers_path, class:'btn btn-default'  %>
 <%= link_to 'New Brewery', new_brewery_path, class:'btn btn-primary' if current_user %>

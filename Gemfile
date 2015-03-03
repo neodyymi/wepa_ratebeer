@@ -6,6 +6,7 @@ gem 'bootstrap-sass'
 gem 'httparty'
 gem 'bcrypt', '~> 3.1.7'
 gem 'rb-readline'
+gem 'rack-mini-profiler'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
@@ -72,5 +73,6 @@ group :test do
 end
 group :development do
   gem 'rails_layout'
+  gem 'actionpack-action_caching'
 end
 ruby '2.2.0'

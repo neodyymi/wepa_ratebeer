@@ -3,8 +3,22 @@ class BreweriesController < ApplicationController
   before_action :ensure_that_signed_in, except: [:index, :show, :list]
   before_action :is_admin, only: [:destroy]
 
+  before_action :skip_if_cached, only:[:index]
+
   # GET /breweries
   # GET /breweries.json
+
+
+  def skip_if_cached
+    @sort = params[:sort] || 'asc'
+    if @sort == 'asc'
+      @direction = 'desc'
+    else
+      @direction = 'asc'
+    end
+    @order = params[:order] || 'name'
+    return render :index if fragment_exist?( "brewerylist-#{@order}-#{@direction}"  )
+  end
 
   def list
 
@@ -15,26 +29,22 @@ class BreweriesController < ApplicationController
     @retired_breweries = Brewery.retired
     @breweries = Brewery.all
 
-    sort = params[:sort] || 'asc'
-    order = params[:order] || 'name'
 
-    if sort == 'asc'
-      @direction = 'desc'
-      @active_breweries = case order
+    if @sort == 'asc'
+      @active_breweries = case @order
                             when 'name' then @active_breweries.sort_by { |b| b.name }
                             when 'year' then @active_breweries.sort_by { |b| b.year }
                           end
-      @retired_breweries = case order
-                            when 'name' then @retired_breweries.sort_by { |b| b.name }
-                            when 'year' then @retired_breweries.sort_by { |b| b.year }
-                          end
+      @retired_breweries = case @order
+                             when 'name' then @retired_breweries.sort_by { |b| b.name }
+                             when 'year' then @retired_breweries.sort_by { |b| b.year }
+                           end
     else
-      @direction = 'asc'
-      @active_breweries = case order
+      @active_breweries = case @order
                             when 'name' then @active_breweries.sort_by { |b| b.name }.reverse
                             when 'year' then @active_breweries.sort_by { |b| b.year }.reverse
                           end
-      @retired_breweries = case order
+      @retired_breweries = case @order
                              when 'name' then @retired_breweries.sort_by { |b| b.name }.reverse
                              when 'year' then @retired_breweries.sort_by { |b| b.year }.reverse
                            end
@@ -58,6 +68,7 @@ class BreweriesController < ApplicationController
   # POST /breweries
   # POST /breweries.json
   def create
+    expire_all
     @brewery = Brewery.new(brewery_params)
 
     respond_to do |format|
@@ -74,6 +85,7 @@ class BreweriesController < ApplicationController
   # PATCH/PUT /breweries/1
   # PATCH/PUT /breweries/1.json
   def update
+    expire_all
     respond_to do |format|
       if @brewery.update(brewery_params)
         format.html { redirect_to @brewery, notice: 'Brewery was successfully updated.' }
@@ -88,6 +100,7 @@ class BreweriesController < ApplicationController
   # DELETE /breweries/1
   # DELETE /breweries/1.json
   def destroy
+    expire_all
     @brewery.destroy
     respond_to do |format|
       format.html { redirect_to breweries_url, notice: 'Brewery was successfully destroyed.' }
@@ -96,6 +109,7 @@ class BreweriesController < ApplicationController
   end
 
   def toggle_activity
+    expire_all
     brewery = Brewery.find(params[:id])
     brewery.update_attribute :active, (not brewery.active)
 
@@ -115,6 +129,8 @@ class BreweriesController < ApplicationController
     params.require(:brewery).permit(:name, :year, :active)
   end
 
-
+  def expire_all
+    ["brewerylist-name-asc", "brewerylist-name-desc", "brewerylist-year-asc", "brewerylist-year-desc"].each{ |f| expire_fragment(f) }
+  end
 
 end

@@ -1,81 +1,83 @@
 <h2>List of ratings</h2>
-
-<div class="row">
-  <div class="col-md-12">
+<%= ActionController::Base.new.fragment_exist?( 'ratingslist' ) %>
+<%= Rails.cache.read("time") - Time.now() %>
+<% cache 'ratingslist', expires_in:10.minutes do %>
     <div class="row">
       <div class="col-md-12">
-        <p>Number of ratings: <%= @ratings.count %></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4">
-        <h4>Top rated beers</h4>
-        <ul>
-          <% @top_beers.each do |beer| %>
-              <li><%= link_to beer.to_s + ": " + round(beer.average_rating).to_s, beer %> </li>
-          <% end %>
-        </ul>
-      </div>
-      <div class="col-md-4">
-        <h4>Top rated breweries</h4>
-        <ul>
-          <% @top_breweries.each do |b| %>
-              <li><%= link_to b.name + ": " + round(b.average_rating.to_s), b %> </li>
-          <% end %>
-        </ul>
-      </div>
-      <div class="col-md-4">
-        <h4>Top styles</h4>
-        <ul>
-          <% @top_styles.each do |s| %>
-              <li><%= link_to s.style + ": " + round(s.average_rating.to_s), s %> </li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <h4>Most active users</h4>
-        <table class="table table-condensed table-hover">
-          <thead>
-          <tr>
-            <th></th>
-            <th>favorite beer</th>
-            <th>favorite stype</th>
-            <th>ratings</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% @top_users.each do |u| %>
-              <tr>
-                <td><%= link_to u.username, u %></td>
-                <td><%= u.favorite_beer%></td>
-                <td><%= u.favorite_style%></td>
-                <td><%= u.ratings.count.to_s %></td>
-              </tr>
-          <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <h4>Recent ratings</h4>
-        <ul>
-          <% @recent.each do |rating| %>
-              <% if not rating.user.nil? %>
-                  <li> <%= rating %> <%= link_to rating.user.username, rating.user %></li>
-              <% else %>
-                  <li> <%= rating %> ERROR: Ei useria kiinni tässä! </li>
+        <div class="row">
+          <div class="col-md-12">
+            <p>Number of ratings: <%= @ratingscount %></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <h4>Top rated beers</h4>
+            <ul>
+              <% @top_beers.each do |beer| %>
+                  <li><%= link_to beer.to_s + ": " + round(beer.average_rating).to_s, beer %> </li>
               <% end %>
-          <% end %>
-        </ul>
-      </div>
-    </div>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h4>Top rated breweries</h4>
+            <ul>
+              <% @top_breweries.each do |b| %>
+                  <li><%= link_to b.name + ": " + round(b.average_rating.to_s), b %> </li>
+              <% end %>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h4>Top styles</h4>
+            <ul>
+              <% @top_styles.each do |s| %>
+                  <li><%= link_to s.style + ": " + round(s.average_rating.to_s), s %> </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <h4>Most active users</h4>
+            <table class="table table-condensed table-hover">
+              <thead>
+              <tr>
+                <th></th>
+                <th>favorite beer</th>
+                <th>favorite stype</th>
+                <th>ratings</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @top_users.each do |u| %>
+                  <tr>
+                    <td><%= link_to u.username, u %></td>
+                    <td><%= u.favorite_beer%></td>
+                    <td><%= u.favorite_style%></td>
+                    <td><%= u.ratings.count.to_s %></td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <h4>Recent ratings</h4>
+            <ul>
+              <% @recent.each do |rating| %>
+                  <% if not rating.user.nil? %>
+                      <li> <%= rating %> <%= link_to rating.user.username, rating.user %></li>
+                  <% else %>
+                      <li> <%= rating %> ERROR: Ei useria kiinni tässä! </li>
+                  <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+<% end %>
 
-
-    <p>
-      <%= link_to "New Rating", new_rating_path, class:'btn btn-primary' if current_user%>
-    </p>
-  </div>
+<p>
+  <%= link_to "New Rating", new_rating_path, class:'btn btn-primary' if current_user%>
+</p>
+</div>
 </div>

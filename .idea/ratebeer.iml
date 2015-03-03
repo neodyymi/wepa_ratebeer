@@ -122,6 +122,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="actionmailer (v4.2.0, rbenv: 2.2.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="actionpack (v4.2.0, rbenv: 2.2.0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="actionpack-action_caching (v1.1.1, rbenv: 2.2.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="actionview (v4.2.0, rbenv: 2.2.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activejob (v4.2.0, rbenv: 2.2.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activemodel (v4.2.0, rbenv: 2.2.0) [gem]" level="application" />
